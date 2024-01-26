@@ -40,7 +40,7 @@ class FileLogger extends AbstractLogger implements ApiLoggerInterface
             //loop each files
             foreach ($files as $file) {
                 if (!File::isDirectory($file)) {
-                    $contentCollection->add((object) unserialize(file_get_contents($file)));
+                    $contentCollection[] = (object) unserialize(file_get_contents($file));
                 }
             }
             return collect($contentCollection)->sortByDesc('created_at');

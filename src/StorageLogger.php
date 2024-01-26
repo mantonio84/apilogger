@@ -39,7 +39,7 @@ class StorageLogger extends AbstractLogger implements ApiLoggerInterface
 			$files=Storage::files($this->path);
 			
             foreach ($files as $file) {                
-				$contentCollection->add((object) unserialize(Storage::get($file)));                
+				$contentCollection[] = (object) unserialize(Storage::get($file));                
             }
             return collect($contentCollection)->sortByDesc('created_at');
         
