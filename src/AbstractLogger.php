@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use Psy\Util\Json;
 
 abstract class AbstractLogger{
@@ -33,7 +34,7 @@ abstract class AbstractLogger{
 			Event::listen('eloquent.*', function ($event, $models) {
 				if (Str::contains($event, 'eloquent.retrieved')) {
 					foreach (array_filter($models) as $model) {
-						$class = get_class($model);
+						$class = get_class($model)."@".$model->getKey();
 						$this->models[$class] = ($this->models[$class] ?? 0) + 1;
 					}
 				}
@@ -110,12 +111,8 @@ abstract class AbstractLogger{
     protected function payload($request)
     {
         $allFields = $request->all();
-
-        foreach (config('apilog.dont_log', []) as $key) {
-            if (array_key_exists($key, $allFields)) {
-                unset($allFields[$key]);
-            }
-        }
+		
+		$this->maskDontLog($allFields,config('apilog.dont_log', []));
 
         return json_encode($allFields);
     }
@@ -129,13 +126,15 @@ abstract class AbstractLogger{
     protected function headers($request)
     {
         $allHeaders = $request->headers->all();
-
-        foreach (config('apilog.dont_log_headers', []) as $key) {
-            if (array_key_exists($key, $allHeaders)) {
-                unset($allHeaders[$key]);
-            }
-        }
-
+		
+		$this->maskDontLog($allHeaders,config('apilog.dont_log_headers', []));
+        
         return json_encode($allHeaders);
     }
+	
+	protected function maskDontLog(array &$source, array $dont_log) {
+		if (!empty($dont_log)){
+			Arr::forget($source,$dont_log);
+		}
+	}
 }

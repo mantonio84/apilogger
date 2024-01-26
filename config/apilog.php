@@ -114,6 +114,6 @@ return [
     |
     */
     'dont_log_headers' => [
-        'Authorization'
+        'authorization'
     ]
 ];
