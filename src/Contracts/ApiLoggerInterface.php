@@ -16,7 +16,7 @@ interface ApiLoggerInterface{
      *
      * @return void
      */
-    public function saveLogs(Request $request, Response|JsonResponse|RedirectResponse $response);
+    public function saveLogs(Request $request,  $response);
     /**
      * return logs to use in the frontend
      *

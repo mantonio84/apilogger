@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use AWT\Contracts\ApiLoggerInterface;
+use Illuminate\Support\Facades\Storage;
 
-class FileLogger extends AbstractLogger implements ApiLoggerInterface
+
+class StorageLogger extends AbstractLogger implements ApiLoggerInterface
 {
 
     /**
@@ -20,7 +22,7 @@ class FileLogger extends AbstractLogger implements ApiLoggerInterface
     public function __construct()
     {
         parent::__construct();
-        $this->path = storage_path('logs/apilogs');
+        $this->path = 'logs/apilogs';
     }
 
     /**
@@ -30,23 +32,17 @@ class FileLogger extends AbstractLogger implements ApiLoggerInterface
      */
     public function getLogs()
     {
-        //check if the directory exists
-        if (File::isDirectory($this->path)) {
-            //scann the directory
-            $files = glob($this->path."/*.*");
+
 
             $contentCollection = collect();
-
-            //loop each files
-            foreach ($files as $file) {
-                if (!File::isDirectory($file)) {
-                    $contentCollection->add((object) unserialize(file_get_contents($file)));
-                }
+			
+			$files=Storage::files($this->path);
+			
+            foreach ($files as $file) {                
+				$contentCollection->add((object) unserialize(Storage::get($file)));                
             }
             return collect($contentCollection)->sortByDesc('created_at');
-        } else {
-            return [];
-        }
+        
     }
 
     /**
@@ -64,11 +60,8 @@ class FileLogger extends AbstractLogger implements ApiLoggerInterface
         $filename = $this->getLogFilename();
 
         $contents = serialize($data);
-
-        if(!File::isDirectory($this->path))
-            File::makeDirectory($this->path, 0777, true, true);
-
-        File::append(($this->path.DIRECTORY_SEPARATOR.$filename), $contents.PHP_EOL);
+       
+        Storage::append(($this->path.DIRECTORY_SEPARATOR.$filename), $contents.PHP_EOL);
 
     }
 
@@ -103,11 +96,8 @@ class FileLogger extends AbstractLogger implements ApiLoggerInterface
      * @return void
      */
     public function deleteLogs()
-    {
-        if (is_dir($this->path)) {
-            File::deleteDirectory($this->path);
-        }
-
+    {        
+		Storage::deleteDirectory($this->path);        
     }
 
 }

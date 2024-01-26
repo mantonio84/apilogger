@@ -29,14 +29,16 @@ abstract class AbstractLogger{
      * @return void
      */
     public function boot(){
-        Event::listen('eloquent.*', function ($event, $models) {
-            if (Str::contains($event, 'eloquent.retrieved')) {
-                foreach (array_filter($models) as $model) {
-                    $class = get_class($model);
-                    $this->models[$class] = ($this->models[$class] ?? 0) + 1;
-                }
-            }
-        });
+		if (config("apilog.enabled") === true){
+			Event::listen('eloquent.*', function ($event, $models) {
+				if (Str::contains($event, 'eloquent.retrieved')) {
+					foreach (array_filter($models) as $model) {
+						$class = get_class($model);
+						$this->models[$class] = ($this->models[$class] ?? 0) + 1;
+					}
+				}
+			});
+		}
     }
 
     /**
@@ -47,7 +49,7 @@ abstract class AbstractLogger{
      *
      * @return array
      */
-    public function logData(Request $request, Response|JsonResponse|RedirectResponse $response){
+    public function logData(Request $request,  $response){
         $currentRouteAction = Route::currentRouteAction();
 
         // Initialiaze controller and action variable before use them

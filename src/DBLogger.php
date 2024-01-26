@@ -32,7 +32,7 @@ class DBLogger extends AbstractLogger implements ApiLoggerInterface{
     /**
      * save logs in database
      */
-    public function saveLogs(Request $request, Response|JsonResponse|RedirectResponse $response)
+    public function saveLogs(Request $request,  $response)
     {
         $data = $this->logData($request,$response);
 

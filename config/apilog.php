@@ -1,7 +1,9 @@
 <?php
 
 return [
-
+	
+	'enabled' => env("API_LOGS_ENABLED",false),
+	
     /*
     |--------------------------------------------------------------------------
     | Log Storage Driver
@@ -15,7 +17,7 @@ return [
     |
     */
 
-    'driver' => env('API_LOGS_DRIVER', 'file'),
+    'driver' => env('API_LOGS_DRIVER', 'storage'),
 
     /*
     |--------------------------------------------------------------------------

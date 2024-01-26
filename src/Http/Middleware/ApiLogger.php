@@ -31,7 +31,9 @@ class ApiLogger
         return $response;
     }
 
-    public function terminate(Request $request, Response|JsonResponse|RedirectResponse $response) {
-        $this->logger->saveLogs($request, $response);
+    public function terminate(Request $request,  $response) {
+		if (config("apilog.enabled") === true){
+			$this->logger->saveLogs($request, $response);
+		}
     }
 }

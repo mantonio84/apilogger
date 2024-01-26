@@ -8,6 +8,7 @@ use AWT\Http\Middleware\ApiLogger;
 use AWT\Contracts\ApiLoggerInterface;
 use AWT\DBLogger;
 use AWT\FileLogger;
+use AWT\StorageLogger;
 use Exception;
 use Illuminate\Support\ServiceProvider;
 
@@ -51,6 +52,9 @@ class ApiLogServiceProvider extends ServiceProvider
             case 'db':
                 $instance = DBLogger::class;
                 break;
+			case 'storage':
+				$instance = StorageLogger::class;
+				break;
             default:
                 try {
                     $instance = $driver;
