@@ -42,7 +42,7 @@ class FileLogger extends AbstractLogger implements ApiLoggerInterface
             foreach ($files as $file) {
                 if (!File::isDirectory($file)) {
                     $contentCollection[] = new ApiLoggerRow(filectime($file), function () use ($file){
-						return unserialize(ile_get_contents($file));
+						return unserialize(file_get_contents($file));
 					});                
                 }
             }
