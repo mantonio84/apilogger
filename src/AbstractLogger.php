@@ -1,6 +1,6 @@
 <?php
 
-namespace Mantonio84;
+namespace Mantonio84\ApiLogger;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
