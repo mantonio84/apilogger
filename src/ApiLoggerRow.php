@@ -19,6 +19,11 @@ class ApiLoggerRow {
 		return array_key_exists($name, $this->data) ? $this->data[$name] : null;
 	}
 	
+	public function __isset($name){
+		$this->fill();
+		return array_key_exists($name, $this->data);
+	}
+	
 	protected function fill(){
 		if (is_null($this->data)){
 			$this->data = Arr::wrap(call_user_func($this->reader));
