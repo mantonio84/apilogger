@@ -11,7 +11,7 @@
 |
 */
 
-$config = array_merge(config('apilog.route'), ['namespace' => 'Mantonio84\\Http\\Controllers']);
+$config = array_merge(config('apilog.route'), ['namespace' => 'Mantonio84\\ApiLogger\\Http\\Controllers']);
 Route::group($config, function($router)
 {
     Route::get('/', 'ApiLogController@index')->name("apilogs.index");
