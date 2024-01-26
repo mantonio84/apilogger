@@ -39,7 +39,7 @@ class StorageLogger extends AbstractLogger implements ApiLoggerInterface
 				return unserialize(Storage::get($file));
 			});                
 		}
-		return collect($contentCollection)->sortByDesc('created_at');
+		return $this->getPaginatedCollection($contentCollection->sortByDesc('created_at'));
         
     }
 	

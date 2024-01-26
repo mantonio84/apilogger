@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use Mantonio84\ApiLogger\Contracts\ApiLoggerInterface;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class FileLogger extends AbstractLogger implements ApiLoggerInterface
 {
@@ -40,14 +41,29 @@ class FileLogger extends AbstractLogger implements ApiLoggerInterface
             //loop each files
             foreach ($files as $file) {
                 if (!File::isDirectory($file)) {
-                    $contentCollection[] = (object) unserialize(file_get_contents($file));
+                    $contentCollection[] = new ApiLoggerRow(filectime($file), function () use ($file){
+						return unserialize(ile_get_contents($file));
+					});                
                 }
             }
-            return collect($contentCollection)->sortByDesc('created_at');
+            return $this->getPaginatedCollection($contentCollection->sortByDesc('created_at'));
         } else {
-            return [];
+            return $this->getPaginatedCollection(collect());
         }
     }
+	
+	protected function getPaginatedCollection($collection, string $pageName = 'page') {
+		return new LengthAwarePaginator(
+			$collection->values(),
+			$collection->count(),
+			config('apiloger.per_page', 25),
+			LengthAwarePaginator::resolveCurrentPage($pageName),
+			[
+				'path' => LengthAwarePaginator::resolveCurrentPath(),
+				'pageName' => $pageName,
+			]
+		);
+	}
 
     /**
      * write logs to file
