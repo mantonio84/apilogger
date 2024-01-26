@@ -5,10 +5,10 @@
     },
     "autoload": {
         "psr-4": {
-            "AWT\\": "src/"
+            "Mantonio84\\ApiLogger\\": "src/"
         }
     },
-    "name": "awt/apilogger",
+    "name": "mantonio84/apilogger",
     "description": "Small laravel package for viewing api logs which can be used in debugging.",
     "type": "library",
     "license": "MIT",
@@ -21,7 +21,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "AWT\\Providers\\ApiLogServiceProvider"
+                "Aantonio84\\Providers\\ApiLogServiceProvider"
             ]
         }
     },

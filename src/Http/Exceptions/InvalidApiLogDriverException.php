@@ -1,6 +1,6 @@
 <?php
 
-namespace AWT\Http\Exceptions;
+namespace Mantonio84\ApiLogger\Http\Exceptions;
 
 use Exception;
 use Throwable;

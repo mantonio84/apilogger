@@ -1,14 +1,14 @@
 <?php
 
-namespace AWT\Providers;
+namespace Mantonio84\ApiLogger\Providers;
 
-use AWT\Console\Commands\ClearApiLogger;
-use AWT\Http\Exceptions\InvalidApiLogDriverException;
-use AWT\Http\Middleware\ApiLogger;
-use AWT\Contracts\ApiLoggerInterface;
-use AWT\DBLogger;
-use AWT\FileLogger;
-use AWT\StorageLogger;
+use Mantonio84\ApiLogger\Console\Commands\ClearApiLogger;
+use Mantonio84\ApiLogger\Http\Exceptions\InvalidApiLogDriverException;
+use Mantonio84\ApiLogger\Http\Middleware\ApiLogger;
+use Mantonio84\ApiLogger\Contracts\ApiLoggerInterface;
+use Mantonio84\ApiLogger\DBLogger;
+use Mantonio84\ApiLogger\FileLogger;
+use Mantonio84\ApiLogger\StorageLogger;
 use Exception;
 use Illuminate\Support\ServiceProvider;
 

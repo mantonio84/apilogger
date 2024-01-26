@@ -1,13 +1,13 @@
 <?php
 
-namespace AWT;
+namespace Mantonio84\ApiLogger;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
-use AWT\Contracts\ApiLoggerInterface;
+use Mantonio84\ApiLogger\Contracts\ApiLoggerInterface;
 
 class FileLogger extends AbstractLogger implements ApiLoggerInterface
 {

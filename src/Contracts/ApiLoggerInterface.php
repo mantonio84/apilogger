@@ -1,6 +1,6 @@
 <?php
 
-namespace AWT\Contracts;
+namespace Mantonio84\ApiLogger\Contracts;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;

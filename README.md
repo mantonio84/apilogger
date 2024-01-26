@@ -10,7 +10,7 @@ request method, url, duration, request payload, which models are retrieved, cont
 1. Install the package via composer
 
 ```bash
-composer require awt/apilogger @dev
+composer require mantonio84/apilogger @dev
 ```
 ## Usage
 
@@ -19,13 +19,13 @@ the ServiceProvider. If you use a lower version of Laravel you must register it 
 _app.php_ file:
 
 ```bash
-AWT\Providers\ApiLogServiceProvider::class
+Mantonio84\ApiLogger\Providers\ApiLogServiceProvider::class
 ```
 
 2. Publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag=config --provider="AWT\Providers\ApiLogServiceProvider"
+php artisan vendor:publish --tag=config --provider="Mantonio84\ApiLogger\Providers\ApiLogServiceProvider"
 ```
 
 The config file is called *apilogs.php*. Currently supported drivers are *db* and *file*

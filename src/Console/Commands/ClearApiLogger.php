@@ -1,8 +1,8 @@
 <?php
 
-namespace AWT\Console\Commands;
+namespace Mantonio84\ApiLogger\Console\Commands;
 
-use AWT\Contracts\ApiLoggerInterface;
+use Mantonio84\ApiLogger\Contracts\ApiLoggerInterface;
 use Illuminate\Console\Command;
 
 class ClearApiLogger extends Command

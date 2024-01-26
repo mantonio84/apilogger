@@ -1,8 +1,8 @@
 <?php
 
-namespace AWT;
+namespace Mantonio84\ApiLogger;
 
-use AWT\Contracts\ApiLoggerInterface;
+use Mantonio84\ApiLogger\Contracts\ApiLoggerInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

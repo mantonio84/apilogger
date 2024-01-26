@@ -1,6 +1,6 @@
 <?php
 
-namespace AWT;
+namespace Mantonio84\ApiLogger;
 
 use Illuminate\Database\Eloquent\Model;
 
