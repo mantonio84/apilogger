@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use Mantonio84\ApiLogger\Contracts\ApiLoggerInterface;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class StorageLogger extends AbstractLogger implements ApiLoggerInterface
 {
@@ -32,18 +32,29 @@ class StorageLogger extends AbstractLogger implements ApiLoggerInterface
      */
     public function getLogs()
     {
-
-
-            $contentCollection = collect();
-			
-			$files=Storage::files($this->path);
-			
-            foreach ($files as $file) {                
-				$contentCollection[] = (object) unserialize(Storage::get($file));                
-            }
-            return collect($contentCollection)->sortByDesc('created_at');
+		$files=Storage::files($this->path);
+	    $contentCollection = collect();		
+		foreach ($files as $file) {                
+			$contentCollection[] = new ApiLoggerRow(Storage::lastModified($file), function () use ($file){
+				return unserialize(Storage::get($file));
+			});                
+		}
+		return collect($contentCollection)->sortByDesc('created_at');
         
     }
+	
+	protected function getPaginatedCollection($collection, string $pageName = 'page') {
+		return new LengthAwarePaginator(
+			$collection->values(),
+			$collection->count(),
+			config('apiloger.per_page', 25),
+			LengthAwarePaginator::resolveCurrentPage($pageName),
+			[
+				'path' => LengthAwarePaginator::resolveCurrentPath(),
+				'pageName' => $pageName,
+			]
+		);
+	}
 
     /**
      * write logs to file
