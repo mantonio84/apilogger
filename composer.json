@@ -21,7 +21,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Mantonio84\\Providers\\ApiLogServiceProvider"
+                "Mantonio84\\ApiLogger\\Providers\\ApiLogServiceProvider"
             ]
         }
     },
