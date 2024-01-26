@@ -11,7 +11,7 @@ class ApiLoggerRow {
 	
 	public function __construct(int $created_at, \Closure $reader){
 		$this->reader=$reader;
-		$this->created_at=$created_At;
+		$this->created_at=$created_at;
 	}
 	
 	public function __get($name){

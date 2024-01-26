@@ -83,7 +83,19 @@ function hex_dump($data, $newline = "\n") {
                     </span>
                     <div class="col-md-3">
                         <p class="mb-0"><b>Duration : </b>{{$log->duration * 1000}}ms<br />
-                        <b>Models(Retrieved) :</b><br />{!! empty($log->models) ? 'None' : implode('<br />', explode(', ', $log->models)) !!}</p>
+                        <b>Models(Retrieved) :</b><br />
+						@empty($log->models)
+						'None'
+						@else
+							<div style="max-height:140px;overflow-y:scroll">
+							<ul>
+							@foreach ($log->models as $m)
+							<li>{{$m}}</li>
+							@endforeach
+							</ul>
+							</div>
+						@endempty
+						
                     </div>
                     <div class= "col-md-3">
                         <p class="mb-0"><b>IP :</b> {{$log->ip}}<br />
